@@ -3,7 +3,7 @@ require_once "service\Tasks.php";
 require_once "classes\Money.php";
 
     // Проверка для задачи 1:
-    echo "Проверка для задачи №1: " . PHP_EOL . celsius_to_fahrenheit(36.6)
+    echo "Проверка для задачи №1: " . PHP_EOL . celsius_to_fahrenheit(37.2)
         . " F" . PHP_EOL;
 
     // Проверка для задачи 2:
