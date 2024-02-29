@@ -1,317 +1,161 @@
 <?php
-	require_once 'tasks\Task.php';
+	require_once "tasks/Task.php";
 	
 	use PHPUnit\Framework\TestCase;
 	
 	class TaskTest extends TestCase
 	{
-		
-		// Тест для задачи 1
-		public function test_odd()
+		// Тесты для Задачи № 1
+		function test_six_digit_format()
 		{
-			
-			$this->assertEquals(1, odd(2));
-			$this->assertEquals(1, odd(1231244));
-			$this->assertEquals(1, odd(2354228));
-			
-			$this->assertEquals(0, odd(1));
-			$this->assertEquals(0, odd(1234123445));
-			$this->assertEquals(0, odd(4532457));
+			$this->assertEquals("000022", six_digit_format(22));
+			$this->assertEquals("003553", six_digit_format(3553));
+			$this->assertEquals("012213", six_digit_format(12213));
 		}
 		
-		// Тест для задачи 2
-		public function test_chess_rock()
+		// Тесты для Задачи № 2
+		function test_clock()
 		{
-			
-			$this->assertTrue(chess_rock("e1", "e2"));
-			$this->assertTrue(chess_rock("h1", "h8"));
-			
-			$this->assertFalse(chess_rock("c3", "f6"));
-			$this->assertFalse(chess_rock("e4", "b7"));
+			$this->assertEquals("05:41:30", clock(20490));
 		}
 		
-		// Тест для задачи 3
-		public function test_chess_king()
+		// Тесты для Задачи № 3
+		function test_full_name()
 		{
-			
-			$this->assertTrue(chess_king("e1", "e2"));
-			$this->assertTrue(chess_king("d1", "c2"));
-			$this->assertTrue(chess_king("h1", "h2"));
-			
-			$this->assertFalse(chess_king("h1", "h3"));
-			$this->assertFalse(chess_king("h3", "f3"));
-			$this->assertFalse(chess_king("b7", "b5"));
+			$this->assertEquals("Пупкин В.О.",
+				full_name("Виталий", "Пупкин", "Олегович"));
 		}
 		
-		// Тесты для задачи 4
-		function test_is_quest()
+		//  Тесты для Задачи № 4
+		function test_short_password()
 		{
 			ob_start();
-			is_quest(true);
+			short_password("lol_kek");
 			$output = ob_get_clean();
-			$this->assertEquals("Пожалуйста авторизуйтесь", $output);
-			
+			$this->assertEquals("Слишком короткий пароль", $output);
+		}
+		
+		// Тесты для Задачи № 5
+		function test_password_gap()
+		{
 			ob_start();
-			is_quest(false);
-			$empty_output = ob_get_clean();
-			$this->assertEmpty($empty_output);
+			password_gap("123 fsdf");
+			$output = ob_get_clean();
+			$this->assertEquals("Пароль содержит пробелы", $output);
 		}
 		
-		// Тесты для задачи 5
-		function test_simple_abs()
+		// Тесты для задачи № 6
+		function test_comparison_letters()
 		{
-			$this->assertEquals(2243241, simple_abs(2243241));
-			$this->assertEquals(2243241, simple_abs(-2243241));
-			$this->assertEquals(14231.52435, simple_abs(14231.52435));
-			$this->assertEquals(5345.41241, simple_abs(-5345.41241));
+			$this->assertTrue(comparison_letters("Hello world", "Goodbye мир994"));
+			$this->assertFalse(comparison_letters("Tratatatatatataфы", " Tests 775223343dfasdfasdf"));
 		}
 		
-		// Тесты для задачи 6
-		function test_maximum()
+		// Тесты для задачи № 7
+		function test_more_details()
 		{
-			$this->assertEquals(24645, maximum(24645, 4123));
-			$this->assertEquals(-442.421, maximum(-8898, -442.421));
-			$this->assertEquals(228322, maximum(228322, 228321.5));
-		}
-		
-		// Тесты для задачи 7
-		function test_chess_black_or_white()
-		{
-			$this->assertEquals("Черное", chess_black_or_white("a1"));
-			$this->assertEquals("Черное", chess_black_or_white("d8"));
-			$this->assertEquals("Черное", chess_black_or_white("h8"));
+			$test_text_1 = <<<Body
+			У Лукоморья дуб срубили
+			Кота на мясо порубили
+			Русалку в бочку посадили
+			И написали: "Огурцы".
+			Там на неведомых дорожках
+			Следы разбитых жигулей,
+			Там мерседес на курьих ножках
+			Стоит без окон без дверей.
+			Там царь Додон у короля
+			Десятку спер по два рубля.
+			Там тридцать три богатыря
+			В помойке ищут три рубля.
+			Body;
+			$test_text_result = <<<Body
+			У Лукоморья дуб срубили
+			Кота на мясо порубили
+			Ру<a href=#> Подробнее</a>
+			Body;
 			
-			$this->assertEquals("Белое", chess_black_or_white("h3"));
-			$this->assertEquals("Белое", chess_black_or_white("h7"));
-			$this->assertEquals("Белое", chess_black_or_white("c6"));
+			$this->assertEquals($test_text_result, more_details($test_text_1));
 		}
 		
-		//Тесты для задачи 8
-		function test_all_even_number()
-		{
-			$this->assertTrue(all_even_number(22, 36, 44));
-			$this->assertTrue(all_even_number(12, 8, 64));
-			$this->assertTrue(all_even_number(2, 4, 1231234412));
-			
-			$this->assertFalse(all_even_number(756756, 756555, 7656567));
-			$this->assertFalse(all_even_number(7657567, 8567567, 876867));
+		// Тесты для задачи № 8
+		function test_reduction() {
+			$this->assertEquals("Обор-ть",reduction("Обороноспособность"));
+			$this->assertEquals("Слон",reduction("Слон"));
 		}
 		
-		//Тесты для задачи 9
-		function test_some_even_number()
+		// Тесты для задачи № 9
+		function test_occurrence_character()
 		{
-			$this->assertTrue(some_even_number(22, 36, 44));
-			$this->assertTrue(some_even_number(2, 31, 3421));
-			$this->assertTrue(some_even_number(1, 3, 554));
-			
-			$this->assertFalse(some_even_number(23453442534545, 523452345, 6543634567));
-			$this->assertFalse(some_even_number(41231245, 6435634567, 87568567865));
-			$this->assertFalse(some_even_number(1, 3, 7));
+			$this->assertEquals(4, occurrence_character("helllo world", "l"));
+			$this->assertEquals(3, occurrence_character("gggert", "g"));
 		}
 		
-		// Тесты для задачи 10
-		function test_weekend()
-		{
-			$this->assertTrue(weekend(6));
-			$this->assertTrue(weekend(26));
-			$this->assertTrue(weekend(27));
-			
-			
-			$this->assertFalse(weekend(21));
-			$this->assertFalse(weekend(23));
+		// Тесты для задачи № 10
+		function test_capslock() {
+			$this->assertEquals("Добро пожаловать!", capslock("qwerty123"));
+			$this->assertEquals("Возможно нажата клавиша Caps Lock...", capslock("QWERTY123"));
+			$this->assertEquals("Password uncorrected", capslock("Lalala"));
 		}
 		
-		// Тесты для задачи 11
-		function test_is_triangle()
+		// Тесты для задачи № 11
+		function test_case_insensitive_occurrence_character()
 		{
-			$this->assertTrue(is_triangle(22, 11, 32));
-			$this->assertTrue(is_triangle(3, 4, 5));
-			$this->assertTrue(is_triangle(6, 8, 10));
-			$this->assertTrue(is_triangle(9, 10, 12));
-			
-			$this->assertFalse(is_triangle(22, 11, 33));
-			$this->assertFalse(is_triangle(7, 14, 5));
-			$this->assertFalse(is_triangle(43, 1111, 543));
-			$this->assertFalse(is_triangle(1, 5, 10));
+			$this->assertEquals(4, case_insensitive_occurrence_character("helLlo worLd", "l"));
+			$this->assertEquals(3, case_insensitive_occurrence_character("gGGert", "g"));
 		}
 		
 		// Тесты для задачи 12
-		function test_leap_year()
-		{
-			$this->assertEquals("YES", leap_year(1896));
-			$this->assertEquals("YES", leap_year(444));
-			$this->assertEquals("YES", leap_year(1904));
-			$this->assertEquals("YES", leap_year(1916));
-			$this->assertEquals("YES", leap_year(2000));
-			$this->assertEquals("YES", leap_year(2012));
-			$this->assertEquals("YES", leap_year(1932));
-			
-			$this->assertEquals("NO", leap_year(1333));
-			$this->assertEquals("NO", leap_year(1900));
-			$this->assertEquals("NO", leap_year(1800));
-			$this->assertEquals("NO", leap_year(1700));
-			$this->assertEquals("NO", leap_year(2013));
-			$this->assertEquals("NO", leap_year(2019));
-			$this->assertEquals("NO", leap_year(731));
+		function test_italics() {
+			ob_start();
+			italics("hello world hello cat", "heLLo");
+			$output = ob_get_clean();
+			$this->assertEquals("hello world hello cat". PHP_EOL .
+			 							"<i>heLLo</i> world <i>heLLo</i> cat", $output);
 		}
-		
 		// Тесты для задачи 13
-		function test_sign_number()
-		{
-			$this->assertEquals(1, sign_number(12312));
-			$this->assertEquals(1, sign_number(32523));
-			$this->assertEquals(1, sign_number(234));
-			$this->assertEquals(1, sign_number(12312));
-			$this->assertEquals(1, sign_number(66574));
-			
-			$this->assertEquals(0, sign_number(0));
-			
-			$this->assertEquals(-1, sign_number(-234));
-			$this->assertEquals(-1, sign_number(-123123));
-			$this->assertEquals(-1, sign_number(-6354));
-			$this->assertEquals(-1, sign_number(-9999));
-			$this->assertEquals(-1, sign_number(-56234523));
+		function test_remove_tag() {
+			$this->assertEquals("Hello world", remove_tag("<h1>Hello world</h1>"));
 		}
 		
 		// Тесты для задачи 14
-		function test_maximum_segment()
-		{
-			$this->assertEquals(10, maximum_segment(5, 7, 10));
-			$this->assertEquals(523, maximum_segment(8, 523, 3));
-			$this->assertEquals(24, maximum_segment(23, 7, 24));
-			$this->assertEquals(65, maximum_segment(65, 7, 10));
-			$this->assertEquals(345, maximum_segment(1, 34, 345));
+		function test_remove_comments() {
+			$input1 = "Some /* comment */ text";
+			$expected1 = "Some  text";
+			$this->assertEquals($expected1, remove_comments($input1));
+			
+			$input2 = "/* Comment 1 */ Some /* Comment 2 */ text /* Comment 3 */";
+			$expected2 = " Some  text ";
+			$this->assertEquals($expected2, remove_comments($input2));
+			
+			$input3 = "";
+			$expected3 = "";
+			$this->assertEquals($expected3, remove_comments($input3));
+			
+			$input4 = "No comments here";
+			$expected4 = "No comments here";
+			$this->assertEquals($expected4, remove_comments($input4));
+			
+			$input5 = "Some /* comment text";
+			$expected5 = "Some ";
+			$this->assertEquals($expected5, remove_comments($input5));
 		}
 		
 		// Тесты для задачи 15
-		function test_temperature_recommendations()
-		{
-			ob_start();
-			temperature_recommendations(-45);
-			$output = ob_end_clean();
-			$this->assertEquals("Оставайтесь дома", $output);
+		function test_highlight_keyword() {
+			$text1 = "This is the first sentence. The second sentence contains the keyword 'keyword'. The third sentence.";
+			$keyword1 = "keyword";
+			$expected1 = " The second sentence contains the <strong>keyword</strong> '<strong>keyword</strong>'";
+			$this->assertEquals($expected1, highlight_keyword($text1, $keyword1));
 			
-			ob_start();
-			temperature_recommendations(-50);
-			$output = ob_end_clean();
-			$this->assertEquals("Оставайтесь дома", $output);
-			
-			ob_start();
-			temperature_recommendations(-500);
-			$output = ob_end_clean();
-			$this->assertEquals("Оставайтесь дома", $output);
-			
-			ob_start();
-			temperature_recommendations(-25);
-			$output = ob_end_clean();
-			$this->assertEquals("Сегодня холодно", $output);
-			
-			ob_start();
-			temperature_recommendations(-15);
-			$output = ob_end_clean();
-			$this->assertEquals("Сегодня холодно", $output);
-			
-			ob_start();
-			temperature_recommendations(0);
-			$output = ob_end_clean();
-			$this->assertEquals("Не холодно!", $output);
-			
-			ob_start();
-			temperature_recommendations(3);
-			$output = ob_end_clean();
-			$this->assertEquals("Не холодно!", $output);
-			
-			ob_start();
-			temperature_recommendations(10);
-			$output = ob_end_clean();
-			$this->assertEquals("Тепло", $output);
-			
-			ob_start();
-			temperature_recommendations(13);
-			$output = ob_end_clean();
-			$this->assertEquals("Тепло", $output);
-			
-			ob_start();
-			temperature_recommendations(17);
-			$output = ob_end_clean();
-			$this->assertEquals("Очень тепло", $output);
-			
-			ob_start();
-			temperature_recommendations(20);
-			$output = ob_end_clean();
-			$this->assertEquals("Очень тепло", $output);
-			
-			ob_start();
-			temperature_recommendations(27);
-			$output = ob_end_clean();
-			$this->assertEquals("Жарко", $output);
-			
-			ob_start();
-			temperature_recommendations(30);
-			$output = ob_end_clean();
-			$this->assertEquals("Жарко", $output);
-			
-			ob_start();
-			temperature_recommendations(37);
-			$output = ob_end_clean();
-			$this->assertEquals("Пекло", $output);
-			
-			ob_start();
-			temperature_recommendations(2234);
-			$output = ob_end_clean();
-			$this->assertEquals("Пекло", $output);
-		}
-		
-		// Тесты для задачи 16
-		function test_diary() {
-			$this->assertTrue(diary("10:19:30", "22:25:29", "21:15:10", "23:10:15"));
-			$this->assertTrue(diary("15:20:22", "21:10:15", "21:10:15", "23:15:20"));
-			$this->assertTrue(diary("8:15:22", "11:35:41", "6:51:33", "12:00:00"));
-			$this->assertTrue(diary("1:12:35", "5:30:00", "1:13:00", "4:30:24"));
-			$this->assertTrue(diary("1:13:00", "4:30:24", "1:12:35", "5:30:00" ));
-			
-			$this->assertFalse(diary("10:19:30", "22:25:29", "22:25:30", "23:10:15"));
-			$this->assertFalse(diary("5:14:53", "7:25:11", "10:24:30", "15:10:45"));
-			$this->assertFalse(diary("23:30:35", "24:00:00", "3:15:25", "7:25:10"));
-			$this->assertFalse(diary("8:17:30", "14:30:00", "15:00:00", "18:00:00"));
-		}
-		
-		// Тесты для задачи 17
-		function test_chocolate() {
-			$this->assertTrue(chocolate(21, 4, 8));
-			$this->assertTrue(chocolate(21, 4, 21));
-			$this->assertTrue(chocolate(21, 4, 42));
-			$this->assertTrue(chocolate(21, 4, 84));
-			$this->assertTrue(chocolate(27, 5, 10));
-			$this->assertTrue(chocolate(27, 5, 27));
-			$this->assertTrue(chocolate(27, 5, 81));
-			$this->assertTrue(chocolate(27, 5, 135));
-			
-			$this->assertFalse(chocolate(31, 7, 8));
-			$this->assertFalse(chocolate(31, 7, 64));
-			$this->assertFalse(chocolate(31, 7, 120));
-			$this->assertFalse(chocolate(31, 7, 218));
-			$this->assertFalse(chocolate(38, 10, 12));
-			$this->assertFalse(chocolate(38, 10, 39));
-			$this->assertFalse(chocolate(38, 10, 55));
-			$this->assertFalse(chocolate(38, 10, 381));
-		}
+			$text2 = "First sentence. The second sentence contains 'key'. Third sentence with no keyword.";
+			$keyword2 = "key";
+			$expected2 = " The second sentence contains '<strong>key</strong>'";
+			$this->assertEquals($expected2, highlight_keyword($text2, $keyword2));
 
-		// Тесты для задачи 18
-		function test_delivery() {
-			$this->assertEquals(15, delivery(6, 9));
-			$this->assertEquals(14, delivery(10, 2));
-			$this->assertEquals(21, delivery(16, 3));
-			$this->assertEquals(28, delivery(12, 14));
+			$text3 = "This sentence contains the word 'key'. Second sentence contains 'key'. Third sentence also has 'key'.";
+			$keyword3 = "key";
+			$expected3 = "This sentence contains the word '<strong>key</strong>'";
+			$this->assertEquals($expected3, highlight_keyword($text3, $keyword3));
 		}
 		
-		// Тесты для задачи 19
-		public function test_what_time_now() {
-			$this->assertEquals("час", what_time_now(1));
-			$this->assertEquals("часа", what_time_now(2));
-			$this->assertEquals("часов", what_time_now(12));
-			$this->assertEquals("час", what_time_now(21));
-			$this->assertEquals("часа", what_time_now(122));
-			$this->assertEquals("часов", what_time_now(25));
-		}
 	}

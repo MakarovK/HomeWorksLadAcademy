@@ -1,2 +1,5 @@
 <?php
-	echo "Все тесты написаны в TaskTest.php с помощью phpunit";
+	require_once "tasks/Task.php";
+	
+	
+	//
