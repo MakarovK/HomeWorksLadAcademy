@@ -5,157 +5,133 @@
 	
 	class TaskTest extends TestCase
 	{
-		// Тесты для Задачи № 1
-		function test_six_digit_format()
-		{
-			$this->assertEquals("000022", six_digit_format(22));
-			$this->assertEquals("003553", six_digit_format(3553));
-			$this->assertEquals("012213", six_digit_format(12213));
-		}
-		
-		// Тесты для Задачи № 2
-		function test_clock()
-		{
-			$this->assertEquals("05:41:30", clock(20490));
-		}
-		
-		// Тесты для Задачи № 3
-		function test_full_name()
-		{
-			$this->assertEquals("Пупкин В.О.",
-				full_name("Виталий", "Пупкин", "Олегович"));
-		}
-		
-		//  Тесты для Задачи № 4
-		function test_short_password()
-		{
-			ob_start();
-			short_password("lol_kek");
-			$output = ob_get_clean();
-			$this->assertEquals("Слишком короткий пароль", $output);
-		}
-		
-		// Тесты для Задачи № 5
-		function test_password_gap()
-		{
-			ob_start();
-			password_gap("123 fsdf");
-			$output = ob_get_clean();
-			$this->assertEquals("Пароль содержит пробелы", $output);
-		}
-		
-		// Тесты для задачи № 6
-		function test_comparison_letters()
-		{
-			$this->assertTrue(comparison_letters("Hello world", "Goodbye мир994"));
-			$this->assertFalse(comparison_letters("Tratatatatatataфы", " Tests 775223343dfasdfasdf"));
-		}
-		
-		// Тесты для задачи № 7
-		function test_more_details()
-		{
-			$test_text_1 = <<<Body
-			У Лукоморья дуб срубили
-			Кота на мясо порубили
-			Русалку в бочку посадили
-			И написали: "Огурцы".
-			Там на неведомых дорожках
-			Следы разбитых жигулей,
-			Там мерседес на курьих ножках
-			Стоит без окон без дверей.
-			Там царь Додон у короля
-			Десятку спер по два рубля.
-			Там тридцать три богатыря
-			В помойке ищут три рубля.
-			Body;
-			$test_text_result = <<<Body
-			У Лукоморья дуб срубили
-			Кота на мясо порубили
-			Ру<a href=#> Подробнее</a>
-			Body;
+		// Тесты для задания 1
+		public function testCreateArrayReputation() {
+			$reputation1 = create_array_reputation('John', 'Alice', 'Bob');
+			$reputation2 = create_array_reputation('Mary', 'James', 'Sophia', 'Michael');
 			
-			$this->assertEquals($test_text_result, more_details($test_text_1));
-		}
-		
-		// Тесты для задачи № 8
-		function test_reduction() {
-			$this->assertEquals("Обор-ть",reduction("Обороноспособность"));
-			$this->assertEquals("Слон",reduction("Слон"));
-		}
-		
-		// Тесты для задачи № 9
-		function test_occurrence_character()
-		{
-			$this->assertEquals(4, occurrence_character("helllo world", "l"));
-			$this->assertEquals(3, occurrence_character("gggert", "g"));
-		}
-		
-		// Тесты для задачи № 10
-		function test_capslock() {
-			$this->assertEquals("Добро пожаловать!", capslock("qwerty123"));
-			$this->assertEquals("Возможно нажата клавиша Caps Lock...", capslock("QWERTY123"));
-			$this->assertEquals("Password uncorrected", capslock("Lalala"));
-		}
-		
-		// Тесты для задачи № 11
-		function test_case_insensitive_occurrence_character()
-		{
-			$this->assertEquals(4, case_insensitive_occurrence_character("helLlo worLd", "l"));
-			$this->assertEquals(3, case_insensitive_occurrence_character("gGGert", "g"));
-		}
-		
-		// Тесты для задачи 12
-		function test_italics() {
-			ob_start();
-			italics("hello world hello cat", "heLLo");
-			$output = ob_get_clean();
-			$this->assertEquals("hello world hello cat". PHP_EOL .
-			 							"<i>heLLo</i> world <i>heLLo</i> cat", $output);
-		}
-		// Тесты для задачи 13
-		function test_remove_tag() {
-			$this->assertEquals("Hello world", remove_tag("<h1>Hello world</h1>"));
-		}
-		
-		// Тесты для задачи 14
-		function test_remove_comments() {
-			$input1 = "Some /* comment */ text";
-			$expected1 = "Some  text";
-			$this->assertEquals($expected1, remove_comments($input1));
+			$this->assertIsArray($reputation1);
+			$this->assertIsArray($reputation2);
 			
-			$input2 = "/* Comment 1 */ Some /* Comment 2 */ text /* Comment 3 */";
-			$expected2 = " Some  text ";
-			$this->assertEquals($expected2, remove_comments($input2));
+			$this->assertCount(3, $reputation1);
+			$this->assertCount(4, $reputation2);
 			
-			$input3 = "";
-			$expected3 = "";
-			$this->assertEquals($expected3, remove_comments($input3));
+			foreach ($reputation1 as $name => $reputation) {
+				$this->assertIsString($name);
+				$this->assertIsInt($reputation);
+				$this->assertGreaterThanOrEqual(50, $reputation);
+				$this->assertLessThanOrEqual(100, $reputation);
+			}
 			
-			$input4 = "No comments here";
-			$expected4 = "No comments here";
-			$this->assertEquals($expected4, remove_comments($input4));
-			
-			$input5 = "Some /* comment text";
-			$expected5 = "Some ";
-			$this->assertEquals($expected5, remove_comments($input5));
+			foreach ($reputation2 as $name => $reputation) {
+				$this->assertIsString($name);
+				$this->assertIsInt($reputation);
+				$this->assertGreaterThanOrEqual(50, $reputation);
+				$this->assertLessThanOrEqual(100, $reputation);
+			}
 		}
 		
-		// Тесты для задачи 15
-		function test_highlight_keyword() {
-			$text1 = "This is the first sentence. The second sentence contains the keyword 'keyword'. The third sentence.";
-			$keyword1 = "keyword";
-			$expected1 = " The second sentence contains the <strong>keyword</strong> '<strong>keyword</strong>'";
-			$this->assertEquals($expected1, highlight_keyword($text1, $keyword1));
+		// Тесты для задания 2
+		public function test_find_value() {
+			$array = ['name' => 'John', 'age' => 30];
+			$key = 'name';
 			
-			$text2 = "First sentence. The second sentence contains 'key'. Third sentence with no keyword.";
-			$keyword2 = "key";
-			$expected2 = " The second sentence contains '<strong>key</strong>'";
-			$this->assertEquals($expected2, highlight_keyword($text2, $keyword2));
+			$result = find_value($array, $key);
+			
+			$this->assertEquals('John', $result);
+		}
 
-			$text3 = "This sentence contains the word 'key'. Second sentence contains 'key'. Third sentence also has 'key'.";
-			$keyword3 = "key";
-			$expected3 = "This sentence contains the word '<strong>key</strong>'";
-			$this->assertEquals($expected3, highlight_keyword($text3, $keyword3));
+		// Тесты для задания 3
+		public function test_glossary() {
+			$result = glossary('яблоко');
+			$this->assertEquals('яблоко - плод яблони, имеющий много сортов и разновидностей, обладающий приятным вкусом и ароматом', $result, );
+
+			$result = glossary('тест');
+			$this->assertNull($result);
 		}
 		
+		// Тесты для задания 4
+		public function test_bowl_rice_and_a_cat_girl()
+		{
+			$reputation = ['Вася' => 120, 'Петя' => 90, 'Коля' => 105];
+			$expected = ['Вася' => 100, 'Петя' => 90, 'Коля' => 100];
+			$result = bowl_rice_and_a_cat_girl($reputation);
+			$this->assertEquals($expected, $result);
+		}
+		
+		// Тесты для задания 5
+		public function test_is_master() {
+			$reputation = ['Вася' => 100, 'Петя' => 90, 'Коля' => 25];
+			$expected = "Junior";
+			$result = is_master($reputation, 'Коля');
+			$this->assertEquals($expected, $result);
+		}
+		
+		// Тесты для задания 6
+		public function test_rating()
+		{
+			$masters = ['John' => 50, 'Alice' => 70];
+			rating($masters, 'John');
+			$this->assertEquals(51, $masters['John']);
+		}
+		
+		// Тесты для задания 7
+		public function test_ban_hammer()
+		{
+			$masters = ['John' => -5, 'Alice' => 10, 'Bob' => -15];
+			$nameToRemove = 'John';
+			ban_hammer($masters, $nameToRemove);
+			$this->assertArrayNotHasKey($nameToRemove, $masters);
+		}
+		
+		// Тесты для задания 8
+		public function test_file_directory_name()
+		{
+			$fullFilePath = '/path/to/directory/filename.txt';
+			$expectedFileName = 'filename.txt';
+			$expectedFolderName = '/path/to/directory';
+			
+			[$fileName, $folderName] = file_directory_name($fullFilePath);
+			
+			$this->assertEquals($expectedFileName, $fileName);
+			$this->assertEquals($expectedFolderName, $folderName);
+		}
+		// Тесты для задания 9
+		public function test_max_reputation() {
+			$masters = [
+				'Vanya' => 50,
+				'Kastet' => 75,
+				'Chinya' => 100,
+				'Misha' => 30,
+				'Vasya' => 120,
+			];
+			$expected = [
+				'Vasya' => 120,
+				'Chinya' => 100,
+				'Kastet' => 75,
+			];
+			$this->assertEquals($expected, max_reputation($masters));
+		}
+		// Тесты для задания 10
+		public function test_translate_day_week()
+		{
+			$this->assertEquals("В Понедельник я пошёл на тренировку, в Пятница я тоже пошёл на тренировку, в Воскресенье я тоже пошёл на тренировку",
+				translate_day_week("В Monday я пошёл на тренировку, в Friday я тоже пошёл на тренировку, в Sunday я тоже пошёл на тренировку"));
+		}
+		
+		// Тесты для задания 11
+		public function test_season()
+		{
+			$this->assertEquals('лето', season('Июнь'));
+			$this->assertEquals('осень', season('Октябрь'));
+			$this->assertEquals('зима', season('Декабрь'));
+			$this->assertEquals('весна', season('Март'));
+		}
+		
+		// Тесты для задания 12
+		public function test_basket()
+		{
+			$this->assertEquals(9999999, basket(28));
+			$this->assertEquals(450, basket(51));
+		}
 	}

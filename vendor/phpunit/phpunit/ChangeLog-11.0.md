@@ -2,6 +2,14 @@
 
 All notable changes of the PHPUnit 11.0 release series are documented in this file using the [Keep a CHANGELOG](https://keepachangelog.com/) principles.
 
+## [11.0.4] - 2024-02-29
+
+### Fixed
+
+* [#5704](https://github.com/sebastianbergmann/phpunit/issues/5704#issuecomment-1951105254): No warning when CLI options are used multiple times
+* [#5707](https://github.com/sebastianbergmann/phpunit/issues/5707): `--fail-on-empty-test-suite` CLI option is not documented in `--help` output
+* [#5716](https://github.com/sebastianbergmann/phpunit/pull/5716): Better respect PHP native array key handling for `assertArrayIs*ToArrayOnlyConsideringListOfKeys()`
+
 ## [11.0.3] - 2024-02-10
 
 ### Changed
@@ -97,6 +105,7 @@ All notable changes of the PHPUnit 11.0 release series are documented in this fi
 * `PHPUnit\TextUI\Configuration\Configuration::registerMockObjectsFromTestArgumentsRecursively()`
 * `PHPUnit\Framework\Constraint\Constraint::exporter()`
 
+[11.0.4]: https://github.com/sebastianbergmann/phpunit/compare/11.0.3...11.0.4
 [11.0.3]: https://github.com/sebastianbergmann/phpunit/compare/11.0.2...11.0.3
 [11.0.2]: https://github.com/sebastianbergmann/phpunit/compare/11.0.1...11.0.2
 [11.0.1]: https://github.com/sebastianbergmann/phpunit/compare/11.0.0...11.0.1
