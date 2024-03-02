@@ -6,132 +6,128 @@
 	class TaskTest extends TestCase
 	{
 		// Тесты для задания 1
-		public function testCreateArrayReputation() {
-			$reputation1 = create_array_reputation('John', 'Alice', 'Bob');
-			$reputation2 = create_array_reputation('Mary', 'James', 'Sophia', 'Michael');
-			
-			$this->assertIsArray($reputation1);
-			$this->assertIsArray($reputation2);
-			
-			$this->assertCount(3, $reputation1);
-			$this->assertCount(4, $reputation2);
-			
-			foreach ($reputation1 as $name => $reputation) {
-				$this->assertIsString($name);
-				$this->assertIsInt($reputation);
-				$this->assertGreaterThanOrEqual(50, $reputation);
-				$this->assertLessThanOrEqual(100, $reputation);
-			}
-			
-			foreach ($reputation2 as $name => $reputation) {
-				$this->assertIsString($name);
-				$this->assertIsInt($reputation);
-				$this->assertGreaterThanOrEqual(50, $reputation);
-				$this->assertLessThanOrEqual(100, $reputation);
-			}
+		public function test_text_n_times()
+		{
+			$text = 'Hello';
+			$n = 3;
+			$expectedResult = 'Hello Hello Hello ';
+			$this->assertEquals($expectedResult, text_n_times($text, $n));
 		}
 		
 		// Тесты для задания 2
-		public function test_find_value() {
-			$array = ['name' => 'John', 'age' => 30];
-			$key = 'name';
-			
-			$result = find_value($array, $key);
-			
-			$this->assertEquals('John', $result);
-		}
-
-		// Тесты для задания 3
-		public function test_glossary() {
-			$result = glossary('яблоко');
-			$this->assertEquals('яблоко - плод яблони, имеющий много сортов и разновидностей, обладающий приятным вкусом и ароматом', $result, );
-
-			$result = glossary('тест');
-			$this->assertNull($result);
+		public function test_paragraph_k_times()
+		{
+			$paragraph = 'Minecraft.';
+			$k = 4;
+			$expectedResult = '<p>Minecraft.</p><p>Minecraft.</p><p>Minecraft.</p><p>Minecraft.</p>';
+			$this->assertEquals($expectedResult, paragraph_k_times($paragraph, $k));
 		}
 		
-		// Тесты для задания 4
-		public function test_bowl_rice_and_a_cat_girl()
+		// Тесты для задания 3
+		public function test_prize_amount()
 		{
-			$reputation = ['Вася' => 120, 'Петя' => 90, 'Коля' => 105];
-			$expected = ['Вася' => 100, 'Петя' => 90, 'Коля' => 100];
-			$result = bowl_rice_and_a_cat_girl($reputation);
-			$this->assertEquals($expected, $result);
+			
+			$this->assertEquals(7, prize_amount(100, 1));
+			$this->assertEquals(3, prize_amount(50, 7));
+			$this->assertEquals(0, prize_amount(10, 20));
+			
 		}
+		
+		// Тесты для задания 4 в мейне
 		
 		// Тесты для задания 5
-		public function test_is_master() {
-			$reputation = ['Вася' => 100, 'Петя' => 90, 'Коля' => 25];
-			$expected = "Junior";
-			$result = is_master($reputation, 'Коля');
-			$this->assertEquals($expected, $result);
+		public function test_all_rating()
+		{
+			$users = [
+				'Vasya'      => 25,
+				'Misha'      => 35,
+				'Konstantin' => 45
+			];
+			$this->assertEquals(105, all_rating($users));
 		}
 		
 		// Тесты для задания 6
-		public function test_rating()
+		public function test_average_rating()
 		{
-			$masters = ['John' => 50, 'Alice' => 70];
-			rating($masters, 'John');
-			$this->assertEquals(51, $masters['John']);
+			{
+				$users = [
+					'User1' => 80,
+					'User2' => 0,
+					'User3' => 60,
+					'User4' => 90
+				];
+				$expectedAverage = (80 + 60 + 90) / 3;
+				$actualAverage = average_rating($users);
+				$this->assertEquals($expectedAverage, $actualAverage);
+			}
 		}
 		
 		// Тесты для задания 7
-		public function test_ban_hammer()
+		public function test_maximum_rating_one_hundred()
 		{
-			$masters = ['John' => -5, 'Alice' => 10, 'Bob' => -15];
-			$nameToRemove = 'John';
-			ban_hammer($masters, $nameToRemove);
-			$this->assertArrayNotHasKey($nameToRemove, $masters);
+			$users = [80, 110, 95, 100];
+			maximum_rating_one_hundred($users);
+			$expected = [80, 100, 95, 100];
+			$this->assertEquals($expected, $users);
 		}
 		
 		// Тесты для задания 8
-		public function test_file_directory_name()
+		public function test_minimum_rating_zero()
 		{
-			$fullFilePath = '/path/to/directory/filename.txt';
-			$expectedFileName = 'filename.txt';
-			$expectedFolderName = '/path/to/directory';
-			
-			[$fileName, $folderName] = file_directory_name($fullFilePath);
-			
-			$this->assertEquals($expectedFileName, $fileName);
-			$this->assertEquals($expectedFolderName, $folderName);
+			$users = [-10, -5, 50, 32];
+			minimum_rating_zero($users);
+			$expected = [0, 0, 50, 32];
+			$this->assertEquals($expected, $users);
 		}
+		
 		// Тесты для задания 9
-		public function test_max_reputation() {
-			$masters = [
-				'Vanya' => 50,
-				'Kastet' => 75,
-				'Chinya' => 100,
-				'Misha' => 30,
-				'Vasya' => 120,
+		public function test_above_average_users()
+		{
+			$users = [
+				'user1' => 70,
+				'user2' => 40,
+				'user3' => 60,
+				'user4' => 80,
+				'user5' => 30,
 			];
-			$expected = [
-				'Vasya' => 120,
-				'Chinya' => 100,
-				'Kastet' => 75,
+			
+			$expectedResult = [
+				'user1' => 70,
+				'user3' => 60,
+				'user4' => 80,
 			];
-			$this->assertEquals($expected, max_reputation($masters));
+			
+			$this->assertEquals($expectedResult, above_average_users($users));
 		}
+		
 		// Тесты для задания 10
-		public function test_translate_day_week()
+		public function test_user_ratings()
 		{
-			$this->assertEquals("В Понедельник я пошёл на тренировку, в Пятница я тоже пошёл на тренировку, в Воскресенье я тоже пошёл на тренировку",
-				translate_day_week("В Monday я пошёл на тренировку, в Friday я тоже пошёл на тренировку, в Sunday я тоже пошёл на тренировку"));
+			$users = [
+				'user1' => 25,
+				'user2' => 50,
+				'user3' => 70,
+			];
+			
+			$expectedOutput = "user1: 25 (Junior)" . PHP_EOL .
+				"user2: 50 (Middle)" . PHP_EOL .
+				"user3: 70 (Senior)" . PHP_EOL;
+			
+			ob_start();
+			user_ratings($users);
+			$actualOutput = ob_get_clean();
+			
+			$this->assertEquals($expectedOutput, $actualOutput);
 		}
-		
 		// Тесты для задания 11
-		public function test_season()
+		public function test_unique_users()
 		{
-			$this->assertEquals('лето', season('Июнь'));
-			$this->assertEquals('осень', season('Октябрь'));
-			$this->assertEquals('зима', season('Декабрь'));
-			$this->assertEquals('весна', season('Март'));
-		}
-		
-		// Тесты для задания 12
-		public function test_basket()
-		{
-			$this->assertEquals(9999999, basket(28));
-			$this->assertEquals(450, basket(51));
+			$users1 = ['user1' => 1, 'user2' => 2, 'user3' => 3];
+			$users2 = ['user2', 'user3', 'user4'];
+			$expectedResult = ['user1' => 1];
+			
+			$result = unique_users($users1, $users2);
+			
+			$this->assertEquals($expectedResult, $result);
 		}
 	}

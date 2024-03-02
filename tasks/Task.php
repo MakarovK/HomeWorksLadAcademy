@@ -1,183 +1,116 @@
 <?php
-	
-	
-	function init_dictionary(): void
+	// Задача 1 Слава КПСС
+	function text_n_times($text, $n): string
 	{
-		global $DICTIONARY;
-		if (empty($DICTIONARY)) {
-			$DICTIONARY = [
-				'яблоко' => 'плод яблони, имеющий много сортов и разновидностей, обладающий приятным вкусом и ароматом',
-				'банан'  => 'тропический фрукт, имеющий длинную кривую форму и жёлтую кожуру',
-				'машина' => 'устройство или механизм, предназначенный для какой-либо деятельности, часто ассоциируется с транспортным средством',
-				'кот'    => 'домашнее животное, часто держится в качестве компаньона или питомца',
-				'солнце' => 'центральная звезда Солнечной системы, обеспечивающая свет и тепло для Земли',
-				'дерево' => 'растение с древовидным стволом, ветвями и листьями, которое играет важную роль в экосистеме',
-				'вода'   => 'бесцветная, безвкусная жидкость(божественный нектар после тренировки), являющаяся одним из основных составляющих всех живых организмов',
-			];
-		}
+		return str_repeat($text . " ", $n);
 	}
 	
-	function init_basket(): void
+	// Задача 2 Абзац
+	function paragraph_k_times($paragraph, $k): string
 	{
-		global $BASKET;
-		if(empty($BASKET)) {
-			$BASKET = [
-				13 => ['name' => 'Кеды', 'count' => 2, 'price' => 123],
-				28 => ['name' => 'Самолет', 'count' => 1, 'price' => 9999999],
-				42 => ['name' => 'Футболка', 'count' => 3, 'price' => 350],
-				51 => ['name' => 'Шорты', 'count' => 1, 'price' => 450],
-				66 => ['name' => 'Рюкзак', 'count' => 2, 'price' => 750],
-			];
-		}
+		return str_repeat("<p>$paragraph</p>", $k);
 	}
 	
-	// Задача 1 Просто
-	function create_array_reputation(...$name): array
+	// Задача 3 Половина
+	function prize_amount($prize, $b): int
 	{
-		$reputation_array = array();
-		$reputation_array_length = func_num_args();
-		for ($i = 0; $i < $reputation_array_length; $i++) {
-			$reputation_array[func_get_arg($i)] = rand(50, 100);
+		$count = 0;
+		while ($prize >= $b) {
+			$prize /= 2;
+			$count++;
 		}
-		return $reputation_array;
+		return $count;
 	}
 	
-	// Задача 2 Поиск данных
-	function find_value($array, $key): mixed
+	// Задача 4 Кто есть кто Chat GPT предложил забавное решение, оставлю его тут
+	function who_is_who($users): void
 	{
-		if (isset($array[$key])) {
-			return $array[$key];
-		} else {
-			echo "Данные не найдены";
+		$maxRating = max($users);
+		echo "╔═══════════════╦═════════════╦════════════╗\n";
+		echo "║ Пользователь  ║ Рейтинг     ║ Графика    ║\n";
+		echo "╠═══════════════╬═════════════╬════════════╣\n";
+		foreach ($users as $user => $rating) {
+			$barLength = intval(($rating / $maxRating) * 20);
+			echo "║ " . str_pad($user, 14) . "║ " . str_pad($rating, 11) . "║ " . str_repeat('█', $barLength) . "║\n";
 		}
-		return null;
+		echo "╚═══════════════╩═════════════╩════════════╝\n";
 	}
 	
-	// Задача 3 Глоссарий
-	
-	function glossary($word): ?string
+	// Задача 5 Весь рейтинг
+	function all_rating($users): int
 	{
-		global $DICTIONARY;
-		init_dictionary();
-		if (isset($DICTIONARY[$word])) {
-			return $word . " - " . $DICTIONARY[$word];
-		} else {
-			return null;
+		$sum = 0;
+		foreach ($users as $user => $rating) {
+			$sum += $rating;
 		}
+		return $sum;
 	}
 	
-	// Задача 4 Выше крыши
-	function bowl_rice_and_a_cat_girl($users): array
+	// Задача 6 Средняя по больнице
+	function average_rating($users): float
+	{
+		$sum = 0.0;
+		$counter = 0;
+		foreach ($users as $user => $rating) {
+			if ($rating !== 0) {
+				$sum += $rating;
+				$counter++;
+			}
+		}
+		return $sum / $counter;
+	}
+	
+	// Задача 7 Выше крыши 2
+	function maximum_rating_one_hundred(&$users): void
 	{
 		foreach ($users as &$user) {
 			if ($user > 100) {
 				$user = 100;
 			}
 		}
-		return $users;
 	}
 	
-	// Задача 5 Данила Мастер
-	function is_master($masters, $name): string
+	// Задача 8 Второе дно
+	function minimum_rating_zero(&$users): void
 	{
-		if (isset($masters[$name])) {
-			return $masters[$name] <= 30 ? "Junior" :
-				($masters[$name] <= 60 ? "Middle" : "Senior");
-		}
-		return "There is no master with that name";
-	}
-	
-	// Задача 6 Рейтинг +1
-	function rating(&$masters, $name): void
-	{
-		if (isset($masters[$name])) {
-			$masters[$name]++;
-		} else {
-			$masters[$name] = 0;
-		}
-	}
-	
-	// Задача 7 Бан
-	function ban_hammer(&$masters, $name): void
-	{
-		if (isset($masters[$name])) {
-			if ($masters[$name] < 0) {
-				unset($masters[$name]);
+		foreach ($users as &$user) {
+			if ($user < 0) {
+				$user = 0;
 			}
 		}
 	}
 	
-	// Задача 8 Файл
-	function file_directory_name($path): array
+	// Задача 9 Экватор
+	function above_average_users($users): array
 	{
-		$array = explode("/", $path);
-		$fileName = $array[count($array) - 1];
-		unset($array[count($array) - 1]);
-		$folderName = implode("/", $array);
-		return [$fileName, $folderName];
-	}
-	
-	// Задача 9 Царь горы
-	function max_reputation($users): array
-	{
-		$reputations = array_values($users);
-		
-		array_multisort($reputations, SORT_DESC, $users);
-		
-		$top_users_keys = array_slice(array_keys($users), 0, 3);
-		
-		return array_intersect_key($users, array_flip($top_users_keys));
-	}
-	
-	// Задача 10 День недели
-	function translate_day_week($text): string
-	{
-		$week_day_russian = ['Понедельник', 'Вторник', 'Среда',
-							 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-		$week_day_english = ['Monday', 'Tuesday', 'Wednesday',
-							 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-		return str_replace($week_day_english, $week_day_russian, $text);
-	}
-	
-	// Задача 11 Лето
-	function season($month_name): string
-	{
-		
-		$seasons = [
-			'январь'   => 'зима',
-			'февраль'  => 'зима',
-			'март'     => 'весна',
-			'апрель'   => 'весна',
-			'май'      => 'весна',
-			'июнь'     => 'лето',
-			'июль'     => 'лето',
-			'август'   => 'лето',
-			'сентябрь' => 'осень',
-			'октябрь'  => 'осень',
-			'ноябрь'   => 'осень',
-			'декабрь'  => 'зима'
-		];
-		
-		$month_name_lower = mb_strtolower($month_name);
-		
-		return $seasons[$month_name_lower] ?? "Месяц не найден";
-	}
-	
-	// Задача 12 Корзина
-	function basket($id): int
-	{
-		global $BASKET;
-		init_basket();
-		if(isset($BASKET[$id])) {
-			return $BASKET[$id]['price'];
+		$result = array();
+		foreach ($users as $user => $rating) {
+			if ($rating > 50) {
+				$result[$user] = $rating;
+			}
 		}
-		return 0;
+		return $result;
 	}
 	
+	// Задача 9 Данила Мастер 2
+	function user_ratings($users): void
+	{
+		foreach ($users as $user => $rating) {
+			if ($rating <= 30) {
+				$status = 'Junior';
+			} elseif ($rating <= 60) {
+				$status = 'Middle';
+			} else {
+				$status = 'Senior';
+			}
+			
+			echo "$user: $rating ($status)" . PHP_EOL;
+		}
+	}
 	
-	
-	
-	
-	
-	
+	// Задача 10 Выйди вон
+	function unique_users($users1, $users2): array
+	{
+		return array_diff_key($users1, array_flip($users2));
+	}
 	
