@@ -114,3 +114,42 @@
 		return array_diff_key($users1, array_flip($users2));
 	}
 	
+	
+	// Задача 11 Зебра
+	function zebra($row_count): void
+	{
+		// Количество строк
+		
+		echo '<table border="1">';
+		$bg_color = 'lightgrey';
+		
+		for ($i = 1; $i <= $row_count; $i++) {
+			$bg_color = ($i % 2 == 0) ? 'lightgrey' : 'lightblue';
+			echo '<tr style="background-color: ' . $bg_color . '">';
+			echo '<td>' . $i . '</td>';
+			echo '</tr>';
+		}
+		
+		echo '</table>';
+	}
+	
+	// Задача 12 Меню
+	function menu(): void
+	{
+		
+		$pages = [
+			'О нас'    => 'about.html',
+			'Главная'  => 'main.html',
+			'Контакты' => 'contacts.html',
+			'Загрузки' => 'downloads.html'
+		];
+		
+		echo '<ul>';
+		foreach ($pages as $title => $url) {
+			echo '<li><a href="' . $url . '">' . $title . '</a></li>';
+		}
+		echo '</ul>';
+		
+	}
+	
+	// Задача 13
