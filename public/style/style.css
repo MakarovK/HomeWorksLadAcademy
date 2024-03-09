@@ -1,0 +1,39 @@
+/* Стили для кнопки регистрации */
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Стили для кнопки при наведении курсора */
+button:hover {
+    background-color: #45a049;
+}
+
+/* Общие стили для страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Стили для заголовка */
+h1 {
+    color: #333;
+}
+
+/* Стили для текста */
+p {
+    color: #666;
+}
